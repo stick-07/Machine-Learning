@@ -3,6 +3,8 @@ import os
 import tensorflow as tf
 import cv2
 import json
+from ultralytics import YOLO
+import numpy as np
 
 DATA_PATH = os.path.join("IOAI", "Pill Classification", "datasets", "training")
 
@@ -17,8 +19,8 @@ def load_images():
       image_list.append(image)
       print(i)
    
-   image_tensor = tf.stack(image_list)
-   return image_tensor
+   train_img_nparr = np.array(image_list)
+   return train_img_nparr
 
 def load_label():
    label_list = []
@@ -82,5 +84,3 @@ def model():
    
    model.fit(train_set, train_label, epochs=30, validation_data=(valid_set, valid_label))
    model.save("pills.h5")
-
-model()
